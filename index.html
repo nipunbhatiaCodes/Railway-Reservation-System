@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RailSafar - Indian Railways Ticket Reservation System | Group 7</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Top Academic Notice Bar -->
+  <div class="top-notice-bar">
+    <div>
+      <b>CSE2003</b> Object Oriented Programming using JAVA | B.Tech CSE Semester 3 | Mini Project
+    </div>
+    <div style="display: flex; gap: 10px; align-items: center;">
+      <span class="team-badge">Group 7: Railway Ticket Reservation System</span>
+      <button class="btn-team-info" style="padding: 2px 8px; font-size: 0.75rem; background: rgba(255,255,255,0.15); color: white; border: none;" onclick="openTeamModal()">
+        👥 View Team Members
+      </button>
+    </div>
+  </div>
+
+  <!-- Primary Navigation -->
+  <header class="navbar">
+    <div class="brand" onclick="document.querySelector('button[data-tab=\'tab-search\']').click()">
+      <div class="brand-logo-icon">🚆</div>
+      <div class="brand-text">
+        <h1>Rail<span>Safar</span></h1>
+        <p>Next-Gen Indian Railways Reservation Portal</p>
+      </div>
+    </div>
+
+    <ul class="nav-links">
+      <li class="nav-item">
+        <button class="active" data-tab="tab-search">
+          <span>🚆</span> Search Trains
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-tab="tab-pnr">
+          <span>🔍</span> PNR Status
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-tab="tab-cancel">
+          <span>❌</span> Cancel & Refund
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-tab="tab-coach">
+          <span>💺</span> Coach Layout
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-tab="tab-database">
+          <span>🗄️</span> DB Records
+        </button>
+      </li>
+      <li class="nav-item">
+        <button data-tab="tab-oop">
+          <span>☕</span> Java OOP Concepts
+        </button>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <form class="quick-pnr-form" id="header-pnr-form">
+        <input type="text" id="header-pnr-input" placeholder="Quick PNR..." maxlength="10">
+        <button type="submit">Track</button>
+      </form>
+    </div>
+  </header>
+
+  <!-- Main Content Wrapper -->
+  <main class="main-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- TAB 1: TRAIN & SCHEDULE SEARCH                                  -->
+    <!-- ============================================================== -->
+    <section id="tab-search" class="tab-content active">
+      <!-- Hero Banner -->
+      <div class="hero-banner">
+        <div class="hero-content">
+          <h2>Book Your Train Journey <span>Safely & Quickly</span></h2>
+          <p>Search real-time seat availability across Vande Bharat, Rajdhani, Shatabdi, and Superfast trains with instant berth allocation and transparent fare calculation.</p>
+        </div>
+      </div>
+
+      <!-- Search Card Form -->
+      <div class="search-box-card">
+        <form id="train-search-form">
+          <div class="search-grid">
+            <div class="form-group">
+              <label>From Station</label>
+              <input type="text" id="search-source" class="form-control" placeholder="Origin Station" value="New Delhi (NDLS)">
+            </div>
+
+            <button type="button" class="btn-swap" id="btn-swap-stations" title="Swap Stations">⇄</button>
+
+            <div class="form-group">
+              <label>To Station</label>
+              <input type="text" id="search-dest" class="form-control" placeholder="Destination Station" value="Varanasi Jn (BSB)">
+            </div>
+
+            <div class="form-group">
+              <label>Journey Date</label>
+              <input type="date" id="search-date" class="form-control" value="2026-12-15">
+            </div>
+
+            <div class="form-group">
+              <label>Travel Class</label>
+              <select id="search-class" class="form-control">
+                <option value="ALL">All Classes</option>
+                <option value="1A">1A - AC First Class</option>
+                <option value="2A">2A - AC 2 Tier</option>
+                <option value="3A">3A - AC 3 Tier</option>
+                <option value="SL">SL - Sleeper Class</option>
+                <option value="CC">CC - AC Chair Car</option>
+                <option value="EC">EC - Exec. Chair Car</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Quota</label>
+              <select id="search-quota" class="form-control">
+                <option value="GENERAL">General (GN)</option>
+                <option value="TATKAL">Tatkal (TQ)</option>
+                <option value="LADIES">Ladies (LD)</option>
+                <option value="SENIOR_CITIZEN">Senior Citizen</option>
+              </select>
+            </div>
+
+            <button type="submit" class="btn-search">
+              <span>🔍</span> Search Trains
+            </button>
+          </div>
+
+          <!-- Quick Filters -->
+          <div class="search-quick-tags">
+            <span>Filter Train Type:</span>
+            <button type="button" class="tag-btn active" data-filter="ALL">All Trains</button>
+            <button type="button" class="tag-btn" data-filter="VANDE">⚡ Vande Bharat</button>
+            <button type="button" class="tag-btn" data-filter="RAJDHANI">👑 Rajdhani</button>
+            <button type="button" class="tag-btn" data-filter="SHATABDI">⚡ Shatabdi</button>
+            <button type="button" class="tag-btn" data-filter="SUPERFAST">🚆 Superfast</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Train Search Results Section -->
+      <div class="results-header">
+        <h3 id="results-count">Available Trains</h3>
+        <div class="filter-sort-bar">
+          <span style="font-size: 0.85rem; color: var(--text-muted)">Live IRCTC Seat Allocation Engine Active</span>
+        </div>
+      </div>
+
+      <div class="train-list" id="train-results-list">
+        <!-- Dynamically injected via app.js -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 2: PNR STATUS & E-TICKET                                    -->
+    <!-- ============================================================== -->
+    <section id="tab-pnr" class="tab-content">
+      <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; margin-bottom: 1.5rem; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm)">
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 0.5rem">
+          Passenger Name Record (PNR) Enquiry
+        </h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem">
+          Enter your 10-digit PNR number printed on top of your ticket to check live booking status, coach/berth allocation, and print your digital boarding pass.
+        </p>
+
+        <div style="display: flex; gap: 10px; max-width: 500px">
+          <input type="text" id="pnr-search-input" class="form-control" placeholder="Enter 10-Digit PNR (e.g. 2849182746)" value="2849182746" maxlength="10">
+          <button class="btn-search" style="padding: 10px 20px;" onclick="lookupPNR()">
+            <span>🔍</span> Get Status
+          </button>
+        </div>
+
+        <div style="display: flex; gap: 8px; margin-top: 10px; align-items: center;">
+          <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Sample PNRs:</span>
+          <button class="tag-btn" onclick="document.getElementById('pnr-search-input').value = '2849182746'; lookupPNR('2849182746');">2849182746 (Vande Bharat)</button>
+          <button class="tag-btn" onclick="document.getElementById('pnr-search-input').value = '8120495813'; lookupPNR('8120495813');">8120495813 (Rajdhani)</button>
+        </div>
+      </div>
+
+      <!-- Ticket Printable Slip Area -->
+      <div id="pnr-ticket-display">
+        <!-- Injected via app.js -->
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 3: TICKET CANCELLATION & REFUND                             -->
+    <!-- ============================================================== -->
+    <section id="tab-cancel" class="tab-content">
+      <div class="refund-card-box">
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 0.5rem">
+          Ticket Cancellation & Automated Refund Calculation
+        </h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.2rem">
+          Cancel your confirmed tickets and calculate net refund based on official Indian Railways cancellation rules and hours remaining before scheduled departure.
+        </p>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: flex-end; background: #f8fafc; padding: 1.2rem; border-radius: var(--radius-md); border: 1px solid var(--border-light)">
+          <div class="form-group">
+            <label>Enter PNR to Cancel</label>
+            <div style="display: flex; gap: 10px">
+              <input type="text" id="cancel-pnr-input" class="form-control" placeholder="10-Digit PNR" value="2849182746">
+              <button class="btn-search" style="padding: 10px 18px;" onclick="loadCancelTicket()">
+                Fetch Ticket
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Simulate Departure Timeline (Hours Before Chart Prep)</label>
+            <input type="range" id="cancel-time-slider" min="1" max="72" value="52" style="width: 100%; accent-color: var(--railway-orange)">
+            <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted); margin-top: 2px;">
+              <span>0h (Chart Done)</span>
+              <span id="cancel-hours-display" style="font-weight: 700; color: var(--railway-orange);">52 Hours before Departure</span>
+              <span>72h (>48h Flat Fee)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="cancel-details-container" style="margin-top: 1.5rem">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <!-- Official Cancellation Slabs Reference Table -->
+        <div style="margin-top: 2rem; border-top: 1px solid var(--border-light); padding-top: 1.5rem">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 8px">
+            Official Indian Railways Cancellation Slabs (CSE2003 Unit 2 Logic):
+          </h4>
+          <table class="styled-table" style="font-size: 0.8rem">
+            <thead>
+              <tr>
+                <th>Timeline Before Departure</th>
+                <th>Cancellation Charges (AC First / Exec)</th>
+                <th>Charges (AC 2 Tier)</th>
+                <th>Charges (AC 3 Tier / CC)</th>
+                <th>Charges (Sleeper)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>More than 48 hours</b></td>
+                <td>₹240 flat per passenger</td>
+                <td>₹200 flat per passenger</td>
+                <td>₹180 flat per passenger</td>
+                <td>₹120 flat per passenger</td>
+              </tr>
+              <tr>
+                <td><b>Between 48 hours and 12 hours</b></td>
+                <td colspan="4">25% of total ticket fare (subject to minimum flat cancellation charge above)</td>
+              </tr>
+              <tr>
+                <td><b>Between 12 hours and 4 hours</b></td>
+                <td colspan="4">50% of total ticket fare deduction</td>
+              </tr>
+              <tr>
+                <td><b>Less than 4 hours / Charting</b></td>
+                <td colspan="4" style="color: var(--danger); font-weight: bold;">No Refund (100% deduction)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 4: COACH BERTH VISUALIZER                                   -->
+    <!-- ============================================================== -->
+    <section id="tab-coach" class="tab-content">
+      <div class="coach-visualizer-container">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem">
+          <div>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-navy)">
+              Interactive 2D Coach Berth Layout
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted)">
+              Standard 72-Berth LHB Coach (Sleeper / AC 3-Tier) layout with smart algorithmic berth distribution.
+            </p>
+          </div>
+          <div style="text-align: right">
+            <span style="font-size: 0.75rem; color: var(--text-muted)">Coach Type</span>
+            <div style="font-weight: 800; color: var(--railway-blue); font-size: 1.1rem">B1 - AC 3-Tier</div>
+          </div>
+        </div>
+
+        <div class="berth-legend">
+          <div class="legend-item">
+            <div class="legend-color" style="background: #dcfce7; border: 1px solid #86efac"></div>
+            <span>Available Seat</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #e2e8f0; border: 1px solid #cbd5e1"></div>
+            <span>Occupied Seat</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-color" style="background: #f97316; border: 1px solid #ea580c"></div>
+            <span>Your Confirmed Allocation</span>
+          </div>
+        </div>
+
+        <!-- Coach Exterior Shell -->
+        <div class="coach-exterior">
+          <div class="coach-header-label">
+            <span>◄ ENGINE DIRECTION</span>
+            <span>INDIAN RAILWAYS COACH NO. 22436-B1</span>
+            <span>REAR GUARD ►</span>
+          </div>
+
+          <div class="coach-grid-interior" id="coach-grid-interior">
+            <!-- Dynamically generated 9 bays × 8 seats via app.js -->
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; border-radius: var(--radius-md); padding: 12px; font-size: 0.8rem; color: var(--text-muted); border: 1px solid var(--border-light)">
+          <b>Berth Nomenclature:</b> <b>LB</b> = Lower Berth (Priority for Seniors 60+), <b>MB</b> = Middle Berth, <b>UB</b> = Upper Berth, <b>SL</b> = Side Lower, <b>SU</b> = Side Upper.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 5: DATABASE TABLES VIEWER                                   -->
+    <!-- ============================================================== -->
+    <section id="tab-database" class="tab-content">
+      <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm)">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem">
+          <div>
+            <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-navy)">
+              Database Tables Inspector
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted)">
+              Live relational database tables as specified in the project syllabus: <code>trains</code>, <code>passengers</code>, <code>tickets</code>.
+            </p>
+          </div>
+          <button class="btn-team-info" onclick="resetMockDatabase()">
+            🔄 Reset Database to Clean Seed
+          </button>
+        </div>
+
+        <!-- Table 1: Trains -->
+        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-navy); margin: 1.2rem 0 0.5rem 0">
+          1. <code>trains</code> Table
+        </h4>
+        <div style="overflow-x: auto;">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Train No</th>
+                <th>Train Name</th>
+                <th>Source Station</th>
+                <th>Dest Station</th>
+                <th>Dep / Arr</th>
+                <th>Duration</th>
+                <th>Class Available Seats</th>
+              </tr>
+            </thead>
+            <tbody id="db-trains-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Table 2: Tickets -->
+        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-navy); margin: 1.8rem 0 0.5rem 0">
+          2. <code>tickets</code> Table (Target of Unit 4 PreparedStatement Transactions)
+        </h4>
+        <div style="overflow-x: auto;">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>PNR (Primary Key)</th>
+                <th>Train</th>
+                <th>Journey Date</th>
+                <th>Class</th>
+                <th>Passengers</th>
+                <th>Total Fare</th>
+                <th>Booking Status</th>
+                <th>Refund Amount</th>
+              </tr>
+            </thead>
+            <tbody id="db-tickets-tbody"></tbody>
+          </table>
+        </div>
+
+        <!-- Table 3: Passengers -->
+        <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary-navy); margin: 1.8rem 0 0.5rem 0">
+          3. <code>passengers</code> Table
+        </h4>
+        <div style="overflow-x: auto;">
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>PNR (Foreign Key)</th>
+                <th>Name</th>
+                <th>Age / Gender</th>
+                <th>Berth Preference</th>
+                <th>Coach</th>
+                <th>Seat</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="db-passengers-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- TAB 6: JAVA OOP SYLLABUS & VIVA GUIDE                           -->
+    <!-- ============================================================== -->
+    <section id="tab-oop" class="tab-content">
+      <div style="background: white; border-radius: var(--radius-lg); padding: 1.5rem; border: 1px solid var(--border-light); box-shadow: var(--shadow-sm)">
+        <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--primary-navy); margin-bottom: 0.5rem">
+          CSE2003 Java OOP Syllabus Mapping & Viva Defense
+        </h3>
+        <p style="font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.5rem">
+          Group 7 Implementation mapping for each unit in the syllabus. All files are organized inside the <code>java-backend/src/railway</code> package.
+        </p>
+
+        <!-- Unit 3 Concurrency Interactive Simulation -->
+        <div style="background: #0f172a; color: white; border-radius: var(--radius-md); padding: 1.25rem; margin-bottom: 1.5rem">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px">
+            <h4 style="color: var(--accent-cyan); font-weight: 800; font-size: 1rem">
+              ⚡ Unit 3 Live Demo: Synchronized Seat Allocation Across Multiple Threads
+            </h4>
+            <button class="btn-search" style="padding: 6px 14px; font-size: 0.8rem; height: 32px" onclick="runConcurrencySimulation()">
+              Run Concurrency Race Test
+            </button>
+          </div>
+          <p style="font-size: 0.8rem; color: #94a3b8; margin-bottom: 10px">
+            Demonstrates prevention of race conditions when multiple passenger threads attempt to reserve the final remaining seat simultaneously.
+          </p>
+          <div id="concurrency-log" style="background: #1e293b; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem; min-height: 90px; line-height: 1.6;">
+            Click "Run Concurrency Race Test" to execute multi-threaded booking lock simulation.
+          </div>
+        </div>
+
+        <!-- Syllabus Breakdown Cards -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <!-- Unit 1 -->
+          <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.2rem; background: #f8fafc">
+            <span class="team-badge" style="background: #dbeafe; color: #1e40af; border: none">Unit 1</span>
+            <h4 style="margin: 8px 0 4px 0; color: var(--primary-navy)">Classes, Method Overloading & Arrays</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted)">
+              Implemented in <code>Train.java</code>, <code>Passenger.java</code>, and <code>Ticket.java</code>. Demonstrates constructor overloading, search method overloading, and passenger array manipulation.
+            </p>
+          </div>
+
+          <!-- Unit 2 -->
+          <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.2rem; background: #f8fafc">
+            <span class="team-badge" style="background: #fef3c7; color: #92400e; border: none">Unit 2</span>
+            <h4 style="margin: 8px 0 4px 0; color: var(--primary-navy)">Interface Reservable & Ticket Hierarchy</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted)">
+              Interface <code>Reservable</code> with subclasses <code>ACTicket</code> and <code>SleeperTicket</code>. Uses method overriding for class-specific fare computation and official refund calculation.
+            </p>
+          </div>
+
+          <!-- Unit 3 -->
+          <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.2rem; background: #f8fafc">
+            <span class="team-badge" style="background: #fee2e2; color: #991b1b; border: none">Unit 3</span>
+            <h4 style="margin: 8px 0 4px 0; color: var(--primary-navy)">Custom Exception & Thread Synchronization</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted)">
+              Custom checked exception <code>SeatNotAvailableException</code>. Synchronized allocation via <code>SynchronizedSeatAllocator.java</code> ensuring thread safety during simultaneous bookings.
+            </p>
+          </div>
+
+          <!-- Unit 4 -->
+          <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.2rem; background: #f8fafc">
+            <span class="team-badge" style="background: #e0e7ff; color: #3730a3; border: none">Unit 4</span>
+            <h4 style="margin: 8px 0 4px 0; color: var(--primary-navy)">JDBC with PreparedStatement</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted)">
+              <code>BookingDAO.java</code> executes parameterized queries protecting against SQL injection, managing transactions across <code>trains</code>, <code>passengers</code>, and <code>tickets</code> tables.
+            </p>
+          </div>
+
+          <!-- Unit 5 -->
+          <div style="border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 1.2rem; background: #f8fafc; grid-column: span 2">
+            <span class="team-badge" style="background: #dcfce7; color: #166534; border: none">Unit 5</span>
+            <h4 style="margin: 8px 0 4px 0; color: var(--primary-navy)">Java Swing GUI with Layouts & Adapters</h4>
+            <p style="font-size: 0.82rem; color: var(--text-muted)">
+              <code>RailwayReservationGUI.java</code> builds desktop Swing interface utilizing <code>BorderLayout</code> (North title, Center forms, South actions) and <code>FlowLayout</code> with <code>WindowAdapter</code> and <code>KeyAdapter</code> event classes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: PASSENGER ENTRY & BOOKING FLOW                          -->
+  <!-- ============================================================== -->
+  <div class="modal-overlay" id="booking-modal">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h3><span>🎟️</span> Passenger Details & Seat Reservation</h3>
+        <button class="modal-close" onclick="closeBookingModal()">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Train Info Banner -->
+        <div id="modal-train-info"></div>
+
+        <!-- Passenger Entries -->
+        <div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px">
+            <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary-navy)">
+              Enter Passenger Details (Max 6)
+            </h4>
+            <button class="btn-add-passenger" onclick="addPassengerRow()">
+              + Add Another Passenger
+            </button>
+          </div>
+          <div id="passengers-form-container" style="display: flex; flex-direction: column; gap: 10px;">
+            <!-- Dynamically populated via app.js -->
+          </div>
+        </div>
+
+        <!-- Contact Info -->
+        <div style="background: #f8fafc; padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--border-light)">
+          <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase">
+            Contact & Ticket Delivery Details
+          </h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px">
+            <div class="form-group">
+              <label>Mobile Number (for SMS Alerts)</label>
+              <input type="tel" id="booking-phone" class="form-control" value="9876543210" maxlength="10">
+            </div>
+            <div class="form-group">
+              <label>Email Address (for E-Ticket PDF)</label>
+              <input type="email" id="booking-email" class="form-control" value="shreyansh@example.com">
+            </div>
+          </div>
+        </div>
+
+        <!-- Fare Summary Breakdown -->
+        <div class="booking-summary-box">
+          <h4 style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase">
+            Fare Summary & GST Invoice
+          </h4>
+          <div id="booking-summary-breakdown">
+            <!-- Dynamically calculated -->
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 0.5rem">
+          <button class="btn-team-info" onclick="closeBookingModal()">Cancel</button>
+          <button class="btn-search" style="padding: 12px 28px;" onclick="handleConfirmBooking()">
+            <span>🔒</span> Confirm & Book Ticket
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================== -->
+  <!-- MODAL: TEAM MEMBERS (GROUP 7)                                  -->
+  <!-- ============================================================== -->
+  <div class="modal-overlay" id="team-modal">
+    <div class="modal-container" style="max-width: 600px;">
+      <div class="modal-header">
+        <h3><span>👥</span> Group 7 - Team Members</h3>
+        <button class="modal-close" onclick="closeTeamModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="background: #eff6ff; padding: 12px; border-radius: var(--radius-md); border: 1px solid #bfdbfe; font-size: 0.85rem; color: var(--secondary-navy)">
+          <b>Course:</b> CSE2003 | Object Oriented Programming using JAVA<br>
+          <b>Program:</b> B.Tech CSE Semester 3 | Mini Project<br>
+          <b>Project:</b> Railway Ticket Reservation System
+        </div>
+
+        <table class="styled-table" style="margin-top: 10px">
+          <thead>
+            <tr>
+              <th>Role</th>
+              <th>Name</th>
+              <th>UID</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="status-tag confirmed">Leader</span></td>
+              <td><b>Akshay Bhardwaj</b></td>
+              <td><code>2510001212</code></td>
+            </tr>
+            <tr>
+              <td>Member 1</td>
+              <td><b>Utkarsh Mishra</b></td>
+              <td><code>2510001283</code></td>
+            </tr>
+            <tr>
+              <td>Member 2</td>
+              <td><b>Nipun Bhatia</b></td>
+              <td><code>2510001217</code></td>
+            </tr>
+            <tr>
+              <td>Member 3</td>
+              <td><b>Shreyansh</b></td>
+              <td><code>2510001258</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="text-align: right; margin-top: 10px">
+          <button class="btn-search" style="height: 36px; padding: 6px 18px; font-size: 0.85rem" onclick="closeTeamModal()">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Team Modal helpers -->
+  <script>
+    function openTeamModal() {
+      document.getElementById('team-modal').classList.add('open');
+    }
+    function closeTeamModal() {
+      document.getElementById('team-modal').classList.remove('open');
+    }
+  </script>
+
+  <!-- Main JavaScript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
